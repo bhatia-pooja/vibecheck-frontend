@@ -12,8 +12,12 @@ const BAY_AREA_KEYWORDS = [
   'noe valley', 'marina', 'richmond', 'sunset', 'tenderloin', 'financial district',
 ];
 
+// "near me/us/here" is NOT a location — needs city picker
+const NEAR_ME = /\b(near|close to|around)\s+(me|us|here)\b/i;
+
 function hasLocationContext(query) {
   const q = query.toLowerCase();
+  if (NEAR_ME.test(q)) return false;
   if (/\b(near|in|at|by|around|close to)\s+\S/.test(q)) return true;
   return BAY_AREA_KEYWORDS.some((kw) => q.includes(kw));
 }

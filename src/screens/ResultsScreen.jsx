@@ -181,10 +181,6 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
           </>
         )}
 
-        {/* Bottom search bar */}
-        <div className="bottom-search">
-          <SearchBar onSubmit={onSearch} compact />
-        </div>
       </div>
     </div>
   );
