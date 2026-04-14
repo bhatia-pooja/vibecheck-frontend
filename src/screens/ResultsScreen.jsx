@@ -12,7 +12,15 @@ const LOADING_MESSAGES = [
   "almost got your answer...",
 ];
 
-const LOCATION_ZONES = ['SF', 'Peninsula', 'South Bay', 'East Bay', 'North Bay'];
+const LOCATION_ZONES = [
+  'San Francisco',
+  'Oakland',
+  'Berkeley',
+  'Palo Alto',
+  'San Jose',
+  'Mountain View',
+  'Marin',
+];
 
 function getHeroGreeting(query) {
   const q = query.toLowerCase();
@@ -98,8 +106,8 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
         {/* Missing location prompt */}
         {!loading && !error && needsLocation && (
           <div className="needs-location">
-            <p className="needs-location-title">love the energy! where are you?</p>
-            <p className="needs-location-sub">Pepper needs a neighborhood to work with.</p>
+            <p className="needs-location-title">which city? 🌶️</p>
+            <p className="needs-location-sub">Pepper knows Bay Area hangouts best — pick your city and she'll find your spot.</p>
             <div className="location-pills">
               {LOCATION_ZONES.map((zone) => (
                 <button
