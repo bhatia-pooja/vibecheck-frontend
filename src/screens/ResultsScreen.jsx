@@ -14,12 +14,10 @@ const LOADING_MESSAGES = [
 
 const LOCATION_ZONES = [
   'San Francisco',
-  'Oakland',
-  'Berkeley',
   'Palo Alto',
+  'Sunnyvale',
   'San Jose',
-  'Mountain View',
-  'Marin',
+  'San Mateo',
 ];
 
 function getHeroGreeting(query) {
@@ -42,6 +40,7 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
   const [audioLoading, setAudioLoading] = useState(false);
   const [loadingMsgIdx, setLoadingMsgIdx] = useState(0);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
+  const [cityInput, setCityInput] = useState('');
 
   useEffect(() => {
     if (!loading) return;
@@ -61,6 +60,12 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
       .catch((e) => console.error('TTS failed:', e))
       .finally(() => setAudioLoading(false));
   }, [result?.vibe_check_script]);
+
+  const handleCitySubmit = (city) => {
+    const trimmed = city.trim();
+    if (!trimmed) return;
+    onSearch(`${query} in ${trimmed}`);
+  };
 
   const places = result?.places || [];
   const greeting = getHeroGreeting(query);
@@ -118,6 +123,23 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
                   {zone}
                 </button>
               ))}
+            </div>
+            <div className="city-input-row">
+              <input
+                className="city-input"
+                type="text"
+                placeholder="or type your city..."
+                value={cityInput}
+                onChange={(e) => setCityInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCitySubmit(cityInput)}
+              />
+              <button
+                className="city-input-go"
+                onClick={() => handleCitySubmit(cityInput)}
+                aria-label="Search"
+              >
+                →
+              </button>
             </div>
           </div>
         )}

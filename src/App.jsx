@@ -14,14 +14,12 @@ const BAY_AREA_KEYWORDS = [
 
 function hasLocationContext(query) {
   const q = query.toLowerCase();
-  // Explicit location patterns
   if (/\b(near|in|at|by|around|close to)\s+\S/.test(q)) return true;
-  // Bay Area keyword
   return BAY_AREA_KEYWORDS.some((kw) => q.includes(kw));
 }
 
 export default function App() {
-  const [screen, setScreen] = useState('home'); // 'home' | 'results'
+  const [screen, setScreen] = useState('home');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,16 +31,15 @@ export default function App() {
     setScreen('results');
     setResult(null);
     setError(null);
+    setNeedsLocation(false);
 
+    // No location context → show city picker
     if (!hasLocationContext(q)) {
-      setLoading(false);
       setNeedsLocation(true);
       return;
     }
 
-    setNeedsLocation(false);
     setLoading(true);
-
     try {
       const data = await getVibeCheck(q);
       setResult(data);

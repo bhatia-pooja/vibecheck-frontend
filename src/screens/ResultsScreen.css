@@ -262,6 +262,52 @@
   color: #fff;
 }
 
+/* City text input row */
+.city-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.city-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #E8DDD4;
+  background: var(--cream);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.city-input::placeholder {
+  color: var(--text-muted);
+}
+
+.city-input:focus {
+  border-color: var(--coral);
+}
+
+.city-input-go {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.city-input-go:hover {
+  background: #d94f2c;
+  transform: scale(1.05);
+}
+
 /* Bottom search */
 .bottom-search {
   margin-top: 8px;

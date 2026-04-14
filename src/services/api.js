@@ -27,6 +27,10 @@ export async function getVibeCheck(query) {
     headers: getHeaders(),
     body: JSON.stringify({ query }),
   });
+  if (res.status === 429) {
+    const data = await res.json();
+    throw new Error(data.error);
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: 'Request failed' }));
     throw new Error(err.error || 'Something went wrong');
