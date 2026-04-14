@@ -1,0 +1,97 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 8px 8px 8px 22px;
+  box-shadow: 0 2px 16px rgba(232,93,58,0.1), 0 1px 4px rgba(0,0,0,0.05);
+  width: 100%;
+  gap: 8px;
+  transition: box-shadow 0.2s;
+}
+
+.search-bar:focus-within {
+  box-shadow: 0 0 0 3px var(--coral-glow), 0 2px 16px rgba(232,93,58,0.1);
+}
+
+.search-bar.compact {
+  padding: 4px 4px 4px 16px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.4;
+  padding: 4px 0;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+  transition: opacity 0.3s ease;
+}
+
+.search-input.placeholder-fade::placeholder {
+  opacity: 0;
+}
+
+.search-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.search-btn:hover {
+  background: var(--coral-light);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(232,93,58,0.35);
+}
+
+.search-btn:active {
+  transform: scale(0.93);
+}
+
+.compact .search-btn {
+  width: 36px;
+  height: 36px;
+}
+
+/* Mic button */
+.mic-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mic-btn:hover {
+  background: rgba(232, 93, 58, 0.08);
+}
+
+.mic-btn.listening {
+  background: var(--coral);
+  color: #fff;
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { transform: scale(0.95); }
+  50%       { transform: scale(1.05); }
+}

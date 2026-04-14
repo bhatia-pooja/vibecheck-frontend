@@ -1,0 +1,35 @@
+.theme-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.pill-green {
+  background: var(--green-pale);
+  color: #3a6b1a;
+}
+
+.pill-yellow {
+  background: var(--yellow-pale);
+  color: #7a5a10;
+}
+
+.pill-pink {
+  background: var(--pink-pale);
+  color: #8b2a4a;
+}
+
+.pill-purple {
+  background: var(--purple-pale);
+  color: #5a2d8b;
+}

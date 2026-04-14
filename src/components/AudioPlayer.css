@@ -1,0 +1,145 @@
+.audio-player {
+  background: var(--dark);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle coral accent line at top */
+.audio-player::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--coral), var(--coral-light));
+  opacity: 0.8;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.player-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.player-duration {
+  font-size: 12px;
+  color: var(--coral-light);
+  font-weight: 500;
+}
+
+.player-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Play button — large white circle with coral glow */
+.play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 0 0 rgba(232,93,58,0);
+}
+
+.play-btn:not(:disabled):hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 22px rgba(232,93,58,0.5);
+}
+
+.play-btn:not(:disabled):active {
+  transform: scale(0.95);
+}
+
+.play-btn.playing {
+  box-shadow: 0 0 18px rgba(232,93,58,0.4);
+}
+
+.play-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.play-btn svg { margin-left: 2px; }
+.play-btn.playing svg { margin-left: 0; }
+
+/* Waveform */
+.waveform-track {
+  flex: 1;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.waveform-bars {
+  display: flex;
+  align-items: center;
+  gap: 2.5px;
+  height: 24px;
+}
+
+.waveform-bar {
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.2);
+  min-width: 2px;
+  transform-origin: center bottom;
+  transition: background 0.15s;
+}
+
+.waveform-bar.played {
+  background: var(--coral);
+}
+
+/* Animated waveform when playing */
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50%       { transform: scaleY(0.35); }
+}
+
+.audio-player.is-playing .waveform-bar {
+  animation: wave var(--dur, 0.8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Played bars animate differently — coral pulse */
+.audio-player.is-playing .waveform-bar.played {
+  background: var(--coral);
+}
+
+.player-time {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  min-width: 34px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(28,15,9,0.2);
+  border-top-color: var(--dark);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
