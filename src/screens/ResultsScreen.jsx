@@ -61,10 +61,16 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
       .finally(() => setAudioLoading(false));
   }, [result?.vibe_check_script]);
 
+  // Strip "near me/us/here" before appending city so it doesn't re-trigger the city picker
+  const baseQuery = query
+    .replace(/\b(near|close to|around)\s+(me|us|here)\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
   const handleCitySubmit = (city) => {
     const trimmed = city.trim();
     if (!trimmed) return;
-    onSearch(`${query} in ${trimmed}`);
+    onSearch(`${baseQuery} in ${trimmed}`);
   };
 
   const places = result?.places || [];
@@ -118,7 +124,7 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
                 <button
                   key={zone}
                   className="location-pill"
-                  onClick={() => onSearch(`${query} in ${zone}`)}
+                  onClick={() => onSearch(`${baseQuery} in ${zone}`)}
                 >
                   {zone}
                 </button>
