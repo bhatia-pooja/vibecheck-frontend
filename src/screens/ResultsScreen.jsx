@@ -5,12 +5,33 @@ import SearchBar from '../components/SearchBar';
 import { getTTSAudio } from '../services/api';
 import './ResultsScreen.css';
 
-const LOADING_MESSAGES = [
+const BASE_LOADING_MESSAGES = [
   "Pepper's asking around...",
   "checking the vibes...",
-  "reading what reddit thinks...",
   "almost got your answer...",
 ];
+
+function getLoadingMessages(query) {
+  const q = (query || '').toLowerCase();
+  let subs;
+  if (/\b(san francisco|sf|soma|mission|castro|hayes|marina|richmond|sunset|tenderloin|noe|pac heights|financial district)\b/.test(q)) {
+    subs = ['r/AskSF', 'r/sanfrancisco'];
+  } else if (/\b(oakland|east bay|berkeley|alameda|temescal|piedmont|emeryville)\b/.test(q)) {
+    subs = ['r/eastbay', 'r/oakland'];
+  } else if (/\b(palo alto|mountain view|sunnyvale|san jose|cupertino|santa clara|los altos|campbell|los gatos|saratoga)\b/.test(q)) {
+    subs = ['r/SiliconValley', 'r/bayarea'];
+  } else if (/\b(san mateo|burlingame|redwood city|menlo park|san carlos|foster city|peninsula)\b/.test(q)) {
+    subs = ['r/bayarea'];
+  } else {
+    subs = ['r/bayarea', 'r/AskSF'];
+  }
+  return [
+    "Pepper's asking around...",
+    `reading ${subs[0]}...`,
+    subs[1] ? `checking ${subs[1]}...` : "checking reddit threads...",
+    "almost got your answer...",
+  ];
+}
 
 const LOCATION_ZONES = [
   'San Francisco',
@@ -42,13 +63,16 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
   const [transcriptOpen, setTranscriptOpen] = useState(false);
   const [cityInput, setCityInput] = useState('');
 
+  const loadingMessages = getLoadingMessages(query);
+
   useEffect(() => {
     if (!loading) return;
+    setLoadingMsgIdx(0);
     const interval = setInterval(() => {
-      setLoadingMsgIdx((i) => (i + 1) % LOADING_MESSAGES.length);
+      setLoadingMsgIdx((i) => (i + 1) % loadingMessages.length);
     }, 1500);
     return () => clearInterval(interval);
-  }, [loading]);
+  }, [loading, query]);
 
   useEffect(() => {
     if (!result?.vibe_check_script) return;
@@ -100,7 +124,7 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
             <div className="pepper-loading-halo">
               <span className="pepper-loading-emoji">🌶️</span>
             </div>
-            <p className="loading-msg">{LOADING_MESSAGES[loadingMsgIdx]}</p>
+            <p className="loading-msg">{loadingMessages[loadingMsgIdx]}</p>
           </div>
         )}
 
@@ -165,7 +189,7 @@ export default function ResultsScreen({ query, result, onSearch, loading, error,
             {/* Place cards — single or horizontal strip */}
             <div className={`place-cards-strip ${places.length === 1 ? 'single' : 'multi'}`}>
               {places.map((p, i) => (
-                <PlaceCard key={p.name + i} place={p} />
+                <PlaceCard key={p.name + i} place={p} redditSources={result?.redditSources || []} />
               ))}
             </div>
 

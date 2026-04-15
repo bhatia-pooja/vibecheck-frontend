@@ -8,16 +8,42 @@
   gap: 0;
 }
 
+.place-photo-link {
+  display: block;
+  text-decoration: none;
+}
+
 .place-photo {
   width: 100%;
   height: 200px;
   overflow: hidden;
+  position: relative;
 }
 
 .place-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.place-photo-link:hover .place-photo img {
+  transform: scale(1.03);
+}
+
+.photo-maps-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  letter-spacing: 0.3px;
 }
 
 .place-info {
@@ -30,6 +56,16 @@
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 4px;
+}
+
+.place-name-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.place-name-link:hover .place-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .place-name {
@@ -110,4 +146,14 @@
 .source-reddit {
   background: #FFF0E8;
   color: #D55A1E;
+}
+
+.source-reddit-link {
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.source-reddit-link:hover {
+  background: #FFD9C2;
+  color: #B8441A;
 }
