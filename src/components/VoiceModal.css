@@ -1,0 +1,191 @@
+/* ── Overlay ─────────────────────────────────────────────────────────────── */
+.voice-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 15, 9, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: overlay-in 0.2s ease;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal card ──────────────────────────────────────────────────────────── */
+.voice-modal {
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 44px 36px 36px;
+  width: min(380px, 90vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 24px 64px rgba(28, 15, 9, 0.35);
+  animation: modal-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-up {
+  from { transform: translateY(32px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* ── Orb ─────────────────────────────────────────────────────────────────── */
+.voice-orb-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.voice-orb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  transition: background 0.3s;
+}
+
+.voice-orb-wrap.error .voice-orb {
+  background: #9C7B6E;
+}
+
+.voice-orb-wrap.heard .voice-orb {
+  background: #2D7A4F;
+}
+
+/* Pulse rings — only animate when listening */
+.voice-orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--coral);
+  opacity: 0;
+  animation: none;
+}
+
+.voice-orb-wrap.listening .voice-orb-ring {
+  animation: ring-pulse 2s ease-out infinite;
+}
+
+.ring-1 { width: 88px;  height: 88px;  animation-delay: 0s   !important; }
+.ring-2 { width: 104px; height: 104px; animation-delay: 0.5s !important; }
+.ring-3 { width: 120px; height: 120px; animation-delay: 1s   !important; }
+
+@keyframes ring-pulse {
+  0%   { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0;   transform: scale(1.1); }
+}
+
+/* Orb breathe animation while listening */
+.voice-orb-wrap.listening .voice-orb {
+  animation: orb-breathe 1.8s ease-in-out infinite;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(232,93,58,0.4); }
+  50%       { transform: scale(1.06); box-shadow: 0 0 0 12px rgba(232,93,58,0); }
+}
+
+/* ── Text ─────────────────────────────────────────────────────────────────── */
+.voice-status {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.voice-transcript {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0 0 28px;
+  padding: 0 8px;
+  min-height: 56px;
+  transition: color 0.2s;
+}
+
+.voice-transcript.interim {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.voice-transcript.final {
+  color: var(--text);
+}
+
+.voice-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 28px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Actions ──────────────────────────────────────────────────────────────── */
+.voice-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.voice-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.voice-btn-confirm {
+  background: var(--coral);
+  color: #fff;
+}
+
+.voice-btn-confirm:hover {
+  background: #c24520;
+  transform: scale(1.02);
+}
+
+.voice-btn-retry {
+  background: var(--surface-raised, #F5EDE4);
+  color: var(--coral);
+  border: 1.5px solid var(--coral);
+}
+
+.voice-btn-retry:hover {
+  background: rgba(232, 93, 58, 0.08);
+}
+
+.voice-btn-cancel {
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.voice-btn-cancel:hover {
+  color: var(--text);
+}
